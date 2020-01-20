@@ -5,13 +5,17 @@ from tweepy import Stream
 import credentials
 import json
 
-print(dir(StreamListener))
-
 class StdOutLinstener(StreamListener):
+    
     def on_data(self, data):
         data_json = json.loads(data)
         print("___________________")
         print(data_json['text'])
+
+        f = open('output.txt', "a")
+        f.write("\n"+ json.dumps(data_json))
+        f.close()
+
         return True        
     
     def on_error(self, status):
